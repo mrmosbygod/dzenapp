@@ -1,4 +1,4 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -48,11 +48,12 @@ async function initDb() {
 }
 initDb();
 
+// --- Хранилище видео (с обновленными описаниями и ценами) ---
 const videos = [
-    { id: 1, title: 'Free Yoga Basics', description: 'Learn the fundamentals of yoga.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'free' },
-    { id: 2, title: 'Advanced HIIT Workout', description: 'High-intensity interval training for advanced users.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'paid' },
-    { id: 3, title: 'Beginner Cardio', description: 'Easy cardio exercises for beginners.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'free' },
-    { id: 4, title: 'Strength Training Pro', description: 'Build muscle with professional techniques.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'paid' }
+    { id: 1, title: 'Растяжка для начинающих (Бесплатно)', description: 'Мягкий комплекс для повышения гибкости. 2 видеоурока по 15 минут.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'free', price: 0 },
+    { id: 2, title: 'Интенсивная растяжка тела (4 видео)', description: 'Профессиональный курс для глубокой растяжки. 4 видеоурока по 20 минут. Подходит для продвинутых.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'paid', price: 2000 }, // 2000 рублей
+    { id: 3, title: 'Утреннее кардио (Бесплатно)', description: 'Энергичная зарядка для пробуждения. 3 видеоурока по 10 минут.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'free', price: 0 },
+    { id: 4, title: 'Силовые тренировки PRO (6 видео)', description: 'Наращивание мышечной массы и выносливости. 6 видеоуроков по 30 минут. Для опытных спортсменов.', url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', type: 'paid', price: 3500 } // 3500 рублей
 ];
 
 // --- API Маршруты ---
@@ -133,7 +134,7 @@ const authenticateToken = async (req, res, next) => {
 app.get('/videos', (req, res) => {
     const videosList = videos.map(video => {
         if (video.type === 'paid') {
-            return { ...video, url: undefined };
+            return { ...video, url: undefined, price: video.price }; // Возвращаем цену для фронтенда
         }
         return video;
     });

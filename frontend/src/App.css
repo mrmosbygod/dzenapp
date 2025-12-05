@@ -132,3 +132,21 @@ video {
   border-radius: 8px;
   margin-top: 1rem;
 }
+
+.App-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.App-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
